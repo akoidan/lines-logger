@@ -8,7 +8,7 @@ describe('test logger', function () {
     let tag = 't1'
     let style = 'color: red'
     let text = "Hello world!"
-    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_WITH_WARNINGS,<any>{
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_RAISE_ERROR,<any>{
       debug: function(...args: any[]){
         assert.equal(args[0], `%c${tag}`);
         assert.equal(args[1], style);
@@ -27,7 +27,7 @@ describe('test logger', function () {
     let textAfter = ". How's it going!"
     let text = `${textBefore}{}${textAfter}`
     let p1 = {a: 3};
-    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_WITH_WARNINGS, <any>{
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_RAISE_ERROR, <any>{
       error: function(...args: any[]){
         assert.equal(args[0], `%c${tag}`);
         assert.equal(args[1], style);
@@ -50,7 +50,7 @@ describe('test logger', function () {
     let textAfter = "going";
     let text = `${textBefore}{}${textMiddle}{}${textAfter}`
     let p1 = 'Mike';
-    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_WITH_WARNINGS, <any>{
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_RAISE_ERROR, <any>{
       warn: function(...args: any[]){
         assert.equal(args[0], `%c${tag}`);
         assert.equal(args[1], style);
@@ -67,7 +67,7 @@ describe('test logger', function () {
     let logger: Logger = loggerFactory.getLogger(tag, style);
     logger.warn(text, p1, p2)();
   });
-  it(`Should warn if params are missing`, function (done) {
+  it(`Should warn if params are missing and LOG_WITH_WARNINGS`, function (done) {
     let called = false;
     let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_WITH_WARNINGS, <any>{
       log: function(...args: any[]){
@@ -82,7 +82,7 @@ describe('test logger', function () {
     let logger: Logger = loggerFactory.getLogger('t2', 'style');
     logger.log('<<<{}==={}>>>', 1)();
   });
-  it('should raise error if params more', function (done) {
+  it('should raise error if params more and LOG_RAISE_ERROR', function (done) {
     let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_RAISE_ERROR);
     let logger: Logger = loggerFactory.getLogger('t2', 'style');
     expect(function() {
@@ -90,4 +90,50 @@ describe('test logger', function () {
     }).to.throw("MissMatch amount of arguments");
     done();
   });
+  it(`Shouldn't warn if warn disabled`, function (done) {
+    let called = false;
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_WITHOUT_WARNINGS,
+        <any>{
+          error: function (...args: any[]) {
+            called = true;
+          },
+          warn: function (...args: any[]) {
+            called = true;
+          },
+          debug: function (...args: any[]) {
+            called = true;
+          },
+          log: function (...args: any[]) {
+
+          }
+        });
+    let logger: Logger = loggerFactory.getLogger('t2', 'style');
+    logger.log('<<<{}', 1, 2)()
+    assert.equal(called, false);
+    done();
+  });
+  it(`shouldn't log if logs are off`, function (done) {
+    let called = false;
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.DISABLE_LOGS,
+        <any>{
+          error: function (...args: any[]) {
+            called = true;
+          },
+          warn: function (...args: any[]) {
+            called = true;
+          },
+          debug: function (...args: any[]) {
+            called = true;
+          },
+          log: function (...args: any[]) {
+            called = true;
+          }
+        });
+    loggerFactory.setLogWarnings(LogStrict.DISABLE_LOGS)
+    let logger: Logger = loggerFactory.getLogger('t2', 'style');
+    logger.log('Hello!')();
+    assert.equal(called, false);
+    done();
+  });
+
 });
