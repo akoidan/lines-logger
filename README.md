@@ -37,5 +37,5 @@ var logger = loggerFactory.getLogger('global', '#753e01');
 logger.log('hello')();
 ```
 
-
+Disable during production
 **Pay attention** that `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
