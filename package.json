@@ -1,0 +1,29 @@
+{
+  "name": "lines-logger",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "description": "A simple browser logger that keeps origin source files location",
+  "scripts": {
+    "build": "tsc -p src/tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deathangel908/lines-logger.git"
+  },
+  "keywords": [
+    "logger"
+  ],
+  "files": [
+    "lib"
+  ],
+  "typings": "./lib/index.d.ts",
+  "author": "Andrew Koidan <deathangel908@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Deathangel908/lines-logger/issues"
+  },
+  "homepage": "https://github.com/Deathangel908/lines-logger#readme",
+  "devDependencies": {
+    "typescript": "^2.9.2"
+  }
+}
