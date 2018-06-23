@@ -37,5 +37,16 @@ var logger = loggerFactory.getLogger('global', '#753e01');
 logger.log('hello')();
 ```
 
-Disable during production
+
+|method|description|example|
+|-|-|-|
+| `factory.getLogger`| Return logger object that has binded functions warn/error/log/debug| `var logger = loggerFactory.getLogger('tag', 'background-color: black')`|
+| `logger.log` [log/error/warn/debug]| Prints `console.log('YOUR TEXT')` | `logger.log('Hello world')()`|
+| `logger.log('{}', p1)`| logger allow to print params to the middle of the line | `logger.log('Hello {}', 'world')()`|
+| `factory.setLogWarnings` | sets logs to: 0 = disables logs, 1 = enable logs, 2 = enables logs and warns if params mismatch, 3 = enables logs and throws error if params mismatch | `loggerFactory.setLogWarnings(0)`|
+| `factory.getSingleLogger` | Returns single logger function  | `var log = loggerFactory.getSingleLogger('tag', 'color: #006c00;', console.log); log('hello world')()`|
+| `factory.getSingleLoggerColor` | Same as getSingleLogger but with predefined tag style| `loggerFactory.getSingleLoggerColor('tag', 'blue')`|
+| `factory.getLoggerColor`| Same as getLogger, but with predefined tag style| `loggerFactory.getLogger('tag', 'black')`|
+
+
 **Pay attention** that `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
