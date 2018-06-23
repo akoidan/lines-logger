@@ -6,7 +6,7 @@ A simple browser logger that keeps origin source files location.  Make your logs
 - Can be disabled for production or any other reason, even in runtime.
 - Typescript support
 - Renders objects as they are, instead of stringifying them
-![logs example][demo.jpeg]
+![logs example](https://raw.githubusercontent.com/Deathangel908/lines-logger/master/demo.jpeg)
 
 
 ```
