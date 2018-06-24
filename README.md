@@ -29,7 +29,7 @@ logger.debug('Show object structure {}', {key: 1})();
 ```
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
-var logger = loggerFactory.getLogger('global', '#753e01');
+var logger = loggerFactory.getLoggerColor('global', '#753e01');
 logger.log('hello')();
 ```
 
