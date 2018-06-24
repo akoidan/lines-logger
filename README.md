@@ -1,4 +1,4 @@
-# lines-logger  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/deathangel908/lines-logger/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger)
+# lines-logger  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/deathangel908/lines-logger/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger)[![Build Status](https://travis-ci.org/Deathangel908/lines-logger.svg?branch=master)](https://travis-ci.org/Deathangel908/lines-logger)
 A simple browser logger that features:
 
 - Colored tags
