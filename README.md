@@ -46,3 +46,32 @@ logger.log('hello')();
 
 
 **Pay attention** that `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
+
+## Some tricks:
+- Don't forget to turn logs during production, you can either pass `0` to constructor: `new LoggerFactory(0);`.  Or use `setLogWarnings(0)`.
+- If there's a case that you need to check logs while production, you can easily do so by exposing loggerFactory to a global variable. 
+```
+var LoggerFactory = require('lines-logger').LoggerFactory;
+var loggerFactory = new LoggerFactory();
+window.loggerFactory = loggerFactory
+```
+Now if you need to debug your production site you can just open devtools and type `loggerFactory.setLogWarnings(1)`
+- If you want to intercept logs with something like [SinonSpy](http://sinonjs.org/releases/v4.0.0/spies/), you can pass it as a 2nd param to a loggerFactory constructor
+```
+import { spy } from 'sinon'
+var loggerSpy = spy()
+new LoggerFactory(0, {
+  error: function () {
+    loggerSpy(arguments)
+  },
+  warn: function () {
+    loggerSpy(arguments)
+  },
+  debug: function () {
+    loggerSpy(arguments)
+  },
+  log: function () {
+    loggerSpy(arguments)
+  }
+})
+```
