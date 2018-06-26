@@ -11,7 +11,7 @@ Make your logs look like this:
 
 ![logs example](https://raw.githubusercontent.com/Deathangel908/lines-logger/master/demo.jpeg)
 
-##How to use:
+## How to use:
 
 Install the logger `npm install lines-logger`.
 
