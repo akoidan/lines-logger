@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "description": "A simple browser logger that keeps origin source files location",
   "scripts": {
-    "build": "tsc -p src/tsconfig.json",
+    "build": "rm ./lib -rf && tsc -p src/tsconfig.json",
     "test": "mocha test/index.ts"
   },
   "repository": {
