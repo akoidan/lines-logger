@@ -3,13 +3,18 @@ export interface Logger {
   log(format: String, ...args: any[]): Function;
   error(format: String, ...args: any[]): Function;
   debug(format: String, ...args: any[]): Function;
+  trace(format: String, ...args: any[]): Function;
 }
 
 export enum LogStrict {
-  DISABLE_LOGS = 0,
-  LOG_WITHOUT_WARNINGS = 1,
+  LOG_RAISE_ERROR = 1,
   LOG_WITH_WARNINGS = 2,
-  LOG_RAISE_ERROR = 3
+  TRACE = 3,
+  DEBUG = 4,
+  INFO = 5,
+  WARN = 6,
+  ERROR = 7,
+  DISABLE_LOGS = 8
 }
 
 export class LoggerFactory {
@@ -17,7 +22,7 @@ export class LoggerFactory {
   private logWarnings: LogStrict;
   private mockConsole: Console;
 
-  constructor(logWarnings: LogStrict = 2, mockConsole: Console = null) {
+  constructor(logWarnings: LogStrict = LogStrict.LOG_WITH_WARNINGS, mockConsole: Console = null) {
     this.logWarnings = logWarnings;
     if (mockConsole) {
       this.mockConsole = mockConsole;
@@ -39,9 +44,9 @@ export class LoggerFactory {
     return this.getSingleLogger(initiator, this.getColorStyle(color), fn);
   }
 
-  public getSingleLogger(initiator: string, style: string, fn: Function) {
+  public getSingleLogger(initiator: string, style: string, fn: Function, min_level: LogStrict = LogStrict.LOG_WITH_WARNINGS) {
     return (...args1: any[]) => {
-      if (this.logWarnings === LogStrict.DISABLE_LOGS) {
+      if (this.logWarnings > min_level) {
         return this.dummy;
       }
       let args = Array.prototype.slice.call(args1);
@@ -74,10 +79,11 @@ export class LoggerFactory {
 
   public getLogger(initiator: string, style: string): Logger {
     return {
-      warn: this.getSingleLogger(initiator, style, this.mockConsole.warn),
-      log: this.getSingleLogger(initiator, style, this.mockConsole.log),
-      error: this.getSingleLogger(initiator, style, this.mockConsole.error),
-      debug: this.getSingleLogger(initiator, style, this.mockConsole.debug)
+      trace: this.getSingleLogger(initiator, style, this.mockConsole.debug, LogStrict.TRACE),
+      debug: this.getSingleLogger(initiator, style, this.mockConsole.debug, LogStrict.DEBUG),
+      log: this.getSingleLogger(initiator, style, this.mockConsole.log, LogStrict.INFO),
+      warn: this.getSingleLogger(initiator, style, this.mockConsole.warn, LogStrict.WARN),
+      error: this.getSingleLogger(initiator, style, this.mockConsole.error, LogStrict.ERROR),
     };
   }
 }

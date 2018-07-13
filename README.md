@@ -36,10 +36,10 @@ logger.log('hello')();
 
 |method|description|example|
 |-|-|-|
-| `factory.getLogger`| Return logger object that has binded functions warn/error/log/debug| `var logger = loggerFactory.getLogger('tag', 'background-color: black')`|
-| `logger.log` [log/error/warn/debug]| Prints `console.log('YOUR TEXT')` | `logger.log('Hello world')()`|
+| `factory.getLogger`| Return logger object that has binded functions warn/error/log/debug/trace| `var logger = loggerFactory.getLogger('tag', 'background-color: black')`|
+| `logger.log` [log/error/warn/debug/trace]| Prints `console.log('YOUR TEXT')` | `logger.log('Hello world')()`|
 | `logger.log('{}', p1)`| logger allow to print params to the middle of the line | `logger.log('Hello {}', 'world')()`|
-| `factory.setLogWarnings` | sets logs to: 0 = disables logs, 1 = enable logs, 2 = enables logs and warns if params mismatch, 3 = enables logs and throws error if params mismatch | `loggerFactory.setLogWarnings(0)`|
+| `factory.setLogWarnings` | sets logs to LOG_RAISE_ERROR = 1, LOG_WITH_WARNINGS = 2, TRACE = 3, DEBUG = 4, INFO = 5, WARN = 6, ERROR = 7, DISABLE_LOGS = 8 } where (LOG_RAISE_ERROR, LOG_WITH_WARNINGS) mean the action if params specified in string construct mismatch actual arguments, e.g. `logger.log('two params given {} {}', one_suplied)();`  if params count missmatch in | `loggerFactory.setLogWarnings(0)`|
 | `factory.getSingleLogger` | Returns single logger function  | `var log = loggerFactory.getSingleLogger('tag', 'color: #006c00;', console.log); log('hello world')()`|
 | `factory.getSingleLoggerColor` | Same as getSingleLogger but with predefined tag style| `loggerFactory.getSingleLoggerColor('tag', 'blue')`|
 | `factory.getLoggerColor`| Same as getLogger, but with predefined tag style| `loggerFactory.getLogger('tag', 'black')`|
@@ -48,14 +48,14 @@ logger.log('hello')();
 **Pay attention** that `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
 
 ## Some tricks:
-- Don't forget to turn logs during production, you can either pass `0` to constructor: `new LoggerFactory(0);`.  Or use `setLogWarnings(0)`.
+- Don't forget to turn logs during production, you can either pass `0` to constructor: `new LoggerFactory(8);`.  Or use `setLogWarnings(8)`.
 - If there's a case that you need to check logs while production, you can easily do so by exposing loggerFactory to a global variable. 
 ```
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
 window.loggerFactory = loggerFactory
 ```
-Now if you need to debug your production site you can just open devtools and type `loggerFactory.setLogWarnings(1)`
+Now if you need to debug your production site you can just open devtools and type `loggerFactory.setLogWarnings(2)`
 - If you want to intercept logs with something like [SinonSpy](http://sinonjs.org/releases/v4.0.0/spies/), you can pass it as a 2nd param to a loggerFactory constructor
 ```
 import { spy } from 'sinon'

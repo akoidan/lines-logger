@@ -92,7 +92,7 @@ describe('test logger', function () {
   });
   it(`Shouldn't warn if warn disabled`, function (done) {
     let called = false;
-    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.LOG_WITHOUT_WARNINGS,
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.TRACE,
         <any>{
           error: function (...args: any[]) {
             called = true;
@@ -132,8 +132,82 @@ describe('test logger', function () {
     loggerFactory.setLogWarnings(LogStrict.DISABLE_LOGS)
     let logger: Logger = loggerFactory.getLogger('t2', 'style');
     logger.log('Hello!')();
+    logger.trace('Hello!')();
+    logger.warn('Hello!')();
+    logger.error('Hello!')();
+    logger.debug('Hello!')();
     assert.equal(called, false);
     done();
   });
+  it(`should trace if log level is trace`, function (done) {
+    let called = false;
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.TRACE,
+        <any>{
+          error: function (...args: any[]) {
+            called = true;
+          },
+          warn: function (...args: any[]) {
+            called = true;
+          },
+          debug: function (...args: any[]) {
+            called = true;
+          },
+          log: function (...args: any[]) {
+            called = true;
+          }
+        });
+    loggerFactory.setLogWarnings(LogStrict.TRACE)
+    let logger: Logger = loggerFactory.getLogger('t2', 'style');
+    logger.trace('Hello!')();
+    assert.equal(called, true);
+    done();
+  });
 
+  it(`should debug if log level is trace`, function (done) {
+    let called = false;
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.TRACE,
+        <any>{
+          error: function (...args: any[]) {
+            called = true;
+          },
+          warn: function (...args: any[]) {
+            called = true;
+          },
+          debug: function (...args: any[]) {
+            called = true;
+          },
+          log: function (...args: any[]) {
+            called = true;
+          }
+        });
+    loggerFactory.setLogWarnings(LogStrict.TRACE)
+    let logger: Logger = loggerFactory.getLogger('t2', 'style');
+    logger.debug('Hello!')();
+    assert.equal(called, true);
+    done();
+  });
+
+  it(`shouldn't trace if debug`, function (done) {
+    let called = false;
+    let loggerFactory: LoggerFactory = new LoggerFactory(LogStrict.DEBUG,
+        <any>{
+          error: function (...args: any[]) {
+            called = true;
+          },
+          warn: function (...args: any[]) {
+            called = true;
+          },
+          debug: function (...args: any[]) {
+            called = true;
+          },
+          log: function (...args: any[]) {
+            called = true;
+          }
+        });
+    loggerFactory.setLogWarnings(LogStrict.DEBUG)
+    let logger: Logger = loggerFactory.getLogger('t2', 'style');
+    logger.trace('Hello!')();
+    assert.equal(called, false);
+    done();
+  });
 });
