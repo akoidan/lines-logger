@@ -21,34 +21,45 @@ import {Logger, LoggerFactory} from 'lines-logger';
 
 let factory: LoggerFactory = new LoggerFactory();
 let logger: Logger = factory.getLoggerColor('tag', 'blue');
+// now anywhere in your code
 logger.log('Hello world')();
-logger.debug('Show object structure {}', {key: 1})();
 ```
 
 **es3**:
 ```
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
-var logger = loggerFactory.getLoggerColor('global', '#753e01');
-logger.log('hello')();
+var logger = loggerFactory.getLoggerColor('tag', 'blue');
+// now anywhere in your code
+logger.log('Hello world')();
 ```
 
 
 |method|description|example|
 |-|-|-|
-| `factory.getLogger`| Return logger object that has binded functions warn/error/log/debug/trace| `var logger = loggerFactory.getLogger('tag', 'background-color: black')`|
-| `logger.log` [log/error/warn/debug/trace]| Prints `console.log('YOUR TEXT')` | `logger.log('Hello world')()`|
-| `logger.log('{}', p1)`| logger allow to print params to the middle of the line | `logger.log('Hello {}', 'world')()`|
-| `factory.setLogWarnings` | sets logs to LOG_RAISE_ERROR = 1, LOG_WITH_WARNINGS = 2, TRACE = 3, DEBUG = 4, INFO = 5, WARN = 6, ERROR = 7, DISABLE_LOGS = 8 } where (LOG_RAISE_ERROR, LOG_WITH_WARNINGS) mean the action if params specified in string construct mismatch actual arguments, e.g. `logger.log('two params given {} {}', one_suplied)();`  if params count missmatch in | `loggerFactory.setLogWarnings(0)`|
-| `factory.getSingleLogger` | Returns single logger function  | `var log = loggerFactory.getSingleLogger('tag', 'color: #006c00;', console.log); log('hello world')()`|
-| `factory.getSingleLoggerColor` | Same as getSingleLogger but with predefined tag style| `loggerFactory.getSingleLoggerColor('tag', 'blue')`|
-| `factory.getLoggerColor`| Same as getLogger, but with predefined tag style| `loggerFactory.getLogger('tag', 'black')`|
-
+| `LoggerFactory.getLogger`| Returns a logger object that has binded functions warn/error/log/debug/trace| `var logger = loggerFactory.getLogger('tag', 'background-color: black')`|
+| `LoggerFactory.setLogWarnings(LOG_RAISE_ERROR)` | log everything and if params specified in string construct mismatch actual arguments, e.g. `logger.log('two params given {} {}', one_suplied)();` throw an error| `loggerFactory.setLogWarnings(1)`|
+| `LoggerFactory.setLogWarnings(LOG_WITH_WARNINGS)` | log everything and if params specified in string construct mismatch actual arguments, e.g. `logger.log('one param given {}', one_suplied, two_supplied)();` warn in console about it | `loggerFactory.setLogWarnings(2)`|
+| `LoggerFactory.setLogWarnings(TRACE)` | log everything but don't warn about param missmatch | `loggerFactory.setLogWarnings(3)`|
+| `LoggerFactory.setLogWarnings(DEBUG)` | log everything above `DEBUG`, this doesn't log `TRACE` to console| `loggerFactory.setLogWarnings(4)`|
+| `LoggerFactory.setLogWarnings(INFO)` | log everything above `INFO`, this doesn't log `TRACE` nor `DEBUG` to console| `loggerFactory.setLogWarnings(5)`|
+| `LoggerFactory.setLogWarnings(WARN)` | log everything above `WARN`, this doesn't log `TRACE` nor `DEBUG`  nor `INFO` to console| `loggerFactory.setLogWarnings(6)`|
+| `LoggerFactory.setLogWarnings(ERROR)` | log everything above `WARN`, this doesn't log `TRACE` nor `DEBUG`  nor `INFO` to console| `loggerFactory.setLogWarnings(7)`|
+| `LoggerFactory.setLogWarnings(DISABLE_LOGS)` | Don't log anything at all, meaning fully disable logs| `loggerFactory.setLogWarnings(8)`|
+| `LoggerFactory.getSingleLogger` | Returns single logger function  | `var log = loggerFactory.getSingleLogger('tag', 'color: #006c00;', console.log); log('hello world')()`|
+| `LoggerFactory.getSingleLoggerColor` | Same as getSingleLogger but with predefined tag style| `loggerFactory.getSingleLoggerColor('tag', 'blue')`|
+| `LoggerFactory.getLoggerColor`| Same as getLogger, but with predefined tag style| `loggerFactory.getLogger('tag', 'black')`|
+| `Logger.trace`| executes `console.debug('YOUR TEXT')` if log level is less\equal `TRACE` or `3` | `logger.log('Hello world')()`|
+| `Logger.debug`| executes `console.debug('YOUR TEXT')`  if log level is less\equal `DEBUG` or `4` | `logger.debug('Hello world')()`|
+| `Logger.log` | executes `console.log('YOUR TEXT')`  if log level is less\equal `INFO` or `5` | `logger.log('Hello world')()`|
+| `Logger.warn` | executes `console.warn('YOUR TEXT')`  if log level is less\equal `WARN` or `6` | `logger.warn('Hello world')()`|
+| `Logger.error` | executes `console.log('YOUR TEXT')`  if log level is less\equal `ERROR` or `7`| `logger.error('Hello world')()`
+| `Logger.log('{}', p1)`| logger allow to print params to the middle of the line | `logger.log('Hello {}!', 'world')()`|
 
 **Pay attention** that `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
 
 ## Some tricks:
-- Don't forget to turn logs during production, you can either pass `0` to constructor: `new LoggerFactory(8);`.  Or use `setLogWarnings(8)`.
+- Don't forget to turn logs during production, you can either pass `8` to constructor: `new LoggerFactory(8);`.  Or use `setLogWarnings(8)`.
 - If there's a case that you need to check logs while production, you can easily do so by exposing loggerFactory to a global variable. 
 ```
 var LoggerFactory = require('lines-logger').LoggerFactory;
