@@ -1,6 +1,6 @@
 {
   "name": "lines-logger",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "lib/index.js",
   "description": "A simple browser logger that keeps origin source files location",
   "scripts": {
@@ -13,8 +13,6 @@
     "clean": "gts clean",
     "compile": "rm ./lib -rf && tsc -p src/tsconfig.json",
     "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
     "posttest": "npm run check"
   },
   "repository": {
@@ -37,12 +35,12 @@
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.3",
-    "@types/node": "^10.3.5",
+    "@types/node": "^11.11.3",
     "chai": "^4.1.2",
     "nyc": "^13.3.0",
-    "mocha": "^5.2.0",
-    "ts-node": "^7.0.0",
-    "typescript": "^2.9.2",
+    "mocha": "^6.0.2",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333",
     "codecov": "^3.2.0",
     "istanbul": "^0.4.5",
     "gts": "^0.9.0"

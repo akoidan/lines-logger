@@ -1,9 +1,13 @@
 export interface Logger {
-  warn(format: String, ...args: any[]): Function;
-  log(format: String, ...args: any[]): Function;
-  error(format: String, ...args: any[]): Function;
-  debug(format: String, ...args: any[]): Function;
-  trace(format: String, ...args: any[]): Function;
+  warn: DoLog;
+  log: DoLog;
+  error: DoLog;
+  debug: DoLog;
+  trace: DoLog;
+}
+
+export interface DoLog {
+  (format: string, ...args: unknown[]): () => void;
 }
 
 export enum LogStrict {
@@ -17,12 +21,23 @@ export enum LogStrict {
   DISABLE_LOGS = 8
 }
 
+export interface MockConsole {
+  debug(message?: unknown, ...optionalParams: unknown[]): void;
+
+  log(message?: unknown, ...optionalParams: unknown[]): void;
+
+  error(message?: unknown, ...optionalParams: unknown[]): void;
+
+  warn(message?: unknown, ...optionalParams: unknown[]): void;
+}
+
 export class LoggerFactory {
-
   private logWarnings: LogStrict;
-  private mockConsole: Console;
+  private mockConsole: MockConsole;
 
-  constructor(logWarnings: LogStrict = LogStrict.LOG_WITH_WARNINGS, mockConsole: Console | null = null) {
+  constructor(
+      logWarnings: LogStrict = LogStrict.LOG_WITH_WARNINGS,
+      mockConsole: MockConsole|null = null) {
     this.logWarnings = logWarnings;
     if (mockConsole) {
       this.mockConsole = mockConsole;
@@ -31,60 +46,67 @@ export class LoggerFactory {
     }
   }
 
-  private dummy() {
+  private dummy() {}
 
-  }
-
-  public setLogWarnings(logWarnings: LogStrict) {
+  setLogWarnings(logWarnings: LogStrict): void {
     this.logWarnings = logWarnings;
   }
 
-
-  public getSingleLoggerColor(initiator: string, color: string, fn: Function) {
+  getSingleLoggerColor(initiator: string, color: string, fn: Function): DoLog {
     return this.getSingleLogger(initiator, this.getColorStyle(color), fn);
   }
 
-  public getSingleLogger(initiator: string, style: string, fn: Function, min_level: LogStrict = LogStrict.LOG_WITH_WARNINGS) {
-    return (...args1: any[]) => {
-      if (this.logWarnings > min_level) {
+  getSingleLogger(
+      initiator: string, style: string, fn: Function,
+      minLevel: LogStrict = LogStrict.LOG_WITH_WARNINGS): DoLog {
+    return (...args1: unknown[]) => {
+      if (this.logWarnings > minLevel) {
         return this.dummy;
       }
-      let args = Array.prototype.slice.call(args1);
-      let parts = args.shift().split('{}');
-      let params = [this.mockConsole, '%c' + initiator, style];
+      const args = Array.prototype.slice.call(args1);
+      const parts = args.shift().split('{}');
+      /* tslint:disable:no-any */
+      // TODO
+      const params: any[any] = [this.mockConsole, '%c' + initiator, style];
+      /* tslint:enable:no-any */
       for (let i = 0; i < parts.length; i++) {
         params.push(parts[i]);
-        if (typeof args[i] !== 'undefined') { // args can be '0'
+        if (typeof args[i] !== 'undefined') {  // args can be '0'
           params.push(args[i]);
         }
       }
-      if (parts.length -1 != args.length) {
+      if (parts.length - 1 !== args.length) {
         if (this.logWarnings === LogStrict.LOG_WITH_WARNINGS) {
-          this.mockConsole.error("MissMatch amount of arguments")
+          this.mockConsole.error('MissMatch amount of arguments');
         } else if (this.logWarnings === LogStrict.LOG_RAISE_ERROR) {
-          throw "MissMatch amount of arguments";
+          throw new Error('MissMatch amount of arguments');
         }
       }
       return Function.prototype.bind.apply(fn, params);
     };
   }
 
-  public getLoggerColor(initiator: string, color: string): Logger {
+  getLoggerColor(initiator: string, color: string): Logger {
     return this.getLogger(initiator, this.getColorStyle(color));
   }
 
-  public getColorStyle(color: string) {
-    return `color: white; background-color: ${color}; padding: 2px 6px; border-radius: 2px; font-size: 10px`;
+  getColorStyle(color: string): string {
+    return `color: white; background-color: ${
+        color}; padding: 2px 6px; border-radius: 2px; font-size: 10px`;
   }
 
-  public getLogger(initiator: string, style: string): Logger {
+  getLogger(initiator: string, style: string): Logger {
     return {
-      trace: this.getSingleLogger(initiator, style, this.mockConsole.debug, LogStrict.TRACE),
-      debug: this.getSingleLogger(initiator, style, this.mockConsole.debug, LogStrict.DEBUG),
-      log: this.getSingleLogger(initiator, style, this.mockConsole.log, LogStrict.INFO),
-      warn: this.getSingleLogger(initiator, style, this.mockConsole.warn, LogStrict.WARN),
-      error: this.getSingleLogger(initiator, style, this.mockConsole.error, LogStrict.ERROR),
+      trace: this.getSingleLogger(
+          initiator, style, this.mockConsole.debug, LogStrict.TRACE),
+      debug: this.getSingleLogger(
+          initiator, style, this.mockConsole.debug, LogStrict.DEBUG),
+      log: this.getSingleLogger(
+          initiator, style, this.mockConsole.log, LogStrict.INFO),
+      warn: this.getSingleLogger(
+          initiator, style, this.mockConsole.warn, LogStrict.WARN),
+      error: this.getSingleLogger(
+          initiator, style, this.mockConsole.error, LogStrict.ERROR),
     };
   }
 }
-
