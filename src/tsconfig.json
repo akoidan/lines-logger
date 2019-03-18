@@ -1,36 +1,10 @@
 {
+  "extends": "../node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "es5",
-      "es2015",
-      "es2015.promise"
-    ],
-    "types": [
-      "mocha",
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "outDir": "../lib",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es5",
-    "declaration": true,
-    "sourceMap": false,
-    "noImplicitAny": true,
-    "removeComments": false,
-    "strictNullChecks": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true
+    "rootDir": ".",
+    "outDir": "../lib"
   },
   "include": [
     "./*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "lib"
   ]
 }

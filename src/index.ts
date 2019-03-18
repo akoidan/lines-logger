@@ -22,7 +22,7 @@ export class LoggerFactory {
   private logWarnings: LogStrict;
   private mockConsole: Console;
 
-  constructor(logWarnings: LogStrict = LogStrict.LOG_WITH_WARNINGS, mockConsole: Console = null) {
+  constructor(logWarnings: LogStrict = LogStrict.LOG_WITH_WARNINGS, mockConsole: Console | null = null) {
     this.logWarnings = logWarnings;
     if (mockConsole) {
       this.mockConsole = mockConsole;
