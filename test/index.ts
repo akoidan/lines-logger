@@ -236,4 +236,9 @@ describe('test logger', () => {
     expect(called).to.be.true;
     done();
   });
+  it(`Default log level should be set`, (done) => {
+    const loggerFactory: LoggerFactory = new LoggerFactory();
+    expect(loggerFactory.getLogWarnings()).to.be.equal(LogStrict.LOG_WITH_WARNINGS);
+    done();
+  });
 });

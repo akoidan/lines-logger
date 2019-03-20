@@ -52,6 +52,10 @@ export class LoggerFactory {
     this.logWarnings = logWarnings;
   }
 
+  getLogWarnings(): LogStrict {
+    return this.logWarnings;
+  }
+
   getSingleLoggerColor(initiator: string, color: string, fn: Function): DoLog {
     return this.getSingleLogger(initiator, this.getColorStyle(color), fn);
   }
