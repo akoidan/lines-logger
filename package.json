@@ -1,6 +1,6 @@
 {
   "name": "lines-logger",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "main": "lib/index.js",
   "description": "A simple browser logger that keeps origin source files location",
   "scripts": {
@@ -49,8 +49,8 @@
     "extension": [
       ".ts"
     ],
-    "exclude": [
-      "**/*.d.ts"
+    "include": [
+      "src/*.ts"
     ],
     "reporter": [
       "html"
