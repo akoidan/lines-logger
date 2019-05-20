@@ -24,8 +24,6 @@ import {Logger, LoggerFactory} from 'lines-logger';
 
 let factory: LoggerFactory = new LoggerFactory();
 let logger: Logger = factory.getLoggerColor('tag', 'blue');
-// now anywhere in your code
-logger.log('Hello world')();
 ```
 
 **es3**:
@@ -33,10 +31,13 @@ logger.log('Hello world')();
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
 var logger = loggerFactory.getLoggerColor('tag', 'blue');
-// now anywhere in your code
-logger.log('Hello world')();
 ```
 
+**Now log anywhere in your code**:
+```javascript
+logger.log('Hello world')(); // pay attention to () in the end. `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
+logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
+```
 
 |method|description|example|
 |-|-|-|
@@ -59,7 +60,6 @@ logger.log('Hello world')();
 | `Logger.error` | executes `console.log('YOUR TEXT')`  if log level is less\equal `ERROR` or `7`| `logger.error('Hello world')()`
 | `Logger.log('{}', p1)`| logger allow to print params to the middle of the line | `logger.log('Hello {}!', 'world')()`|
 
-**Pay attention** that `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
 
 ## Some tricks:
 - Don't forget to turn logs during production, you can either pass `8` to constructor: `new LoggerFactory(8);`.  Or use `setLogWarnings(8)`.
