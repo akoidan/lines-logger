@@ -19,7 +19,7 @@ Make your logs look like this:
 Install the logger `npm install lines-logger`.
 
  **typescript**:
-```
+```typescript
 import {Logger, LoggerFactory} from 'lines-logger';
 
 let factory: LoggerFactory = new LoggerFactory();
@@ -29,7 +29,7 @@ logger.log('Hello world')();
 ```
 
 **es3**:
-```
+```javascript
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
 var logger = loggerFactory.getLoggerColor('tag', 'blue');
