@@ -39,6 +39,15 @@ logger.log('Hello world')(); // pay attention to () in the end. `logger.log` ret
 logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 ```
 
+**CDN**:
+```html
+<script src="https://cdn.jsdelivr.net/npm/lines-logger@{{VERSION}}/lib/browser.js"></script>
+<script>
+var LoggerFactory = linesLogger.LoggerFactory()
+</script>
+```
+where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger)
+
 |method|description|example|
 |-|-|-|
 | `LoggerFactory.getLogger`| Returns a logger object that has binded functions warn/error/log/debug/trace| `var logger = loggerFactory.getLogger('tag', 'background-color: black')`|
