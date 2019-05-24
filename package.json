@@ -1,6 +1,6 @@
 {
   "name": "lines-logger",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "lib/index.js",
   "description": "A simple browser logger that keeps origin source files location",
   "scripts": {
@@ -11,7 +11,7 @@
     "codecov": "codecov",
     "check": "gts check",
     "clean": "gts clean",
-    "compile": "rm ./lib -rf && tsc -p src/tsconfig.json",
+    "compile": "rm ./lib -rf && tsc -p src/tsconfig.json && rollup  -c ./rollup.config.js",
     "fix": "gts fix",
     "posttest": "npm run check"
   },
@@ -43,6 +43,9 @@
     "gts": "^0.9.0",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0",
+    "rollup": "^1.12.3",
+    "rollup-plugin-uglify": "^6.0.2",
+    "rollup-plugin-typescript": "^1.0.1",
     "sinon": "^7.3.0",
     "sinon-chai": "^3.3.0",
     "ts-node": "^8.0.3",

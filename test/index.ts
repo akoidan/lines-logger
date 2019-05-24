@@ -174,4 +174,9 @@ describe('test logger', () => {
     expect(loggerFactory.getLogWarnings())
         .to.be.equal(LogStrict.LOG_WITH_WARNINGS);
   });
+  it(`Exception should be throw on invalid level`, () => {
+    expect(() => {
+      const loggerFactory: LoggerFactory = new LoggerFactory(-1);
+    }).to.throw(/Invalid log level -1/);
+  });
 });
