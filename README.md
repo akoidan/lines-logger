@@ -64,14 +64,14 @@ logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 ## Some tricks:
 - Don't forget to turn logs during production, you can either pass `8` to constructor: `new LoggerFactory(8);`.  Or use `setLogWarnings(8)`.
 - If there's a case that you need to check logs while production, you can easily do so by exposing loggerFactory to a global variable. 
-```
+``` js
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
 window.loggerFactory = loggerFactory
 ```
 Now if you need to debug your production site you can just open devtools and type `loggerFactory.setLogWarnings(2)`
 - If you want to intercept logs with something like [SinonSpy](http://sinonjs.org/releases/v4.0.0/spies/), you can pass it as a 2nd param to a loggerFactory constructor
-```
+``` js
 import { spy } from 'sinon'
 var loggerSpy = spy()
 new LoggerFactory(0, {
