@@ -46,7 +46,8 @@ logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 var LoggerFactory = linesLogger.LoggerFactory()
 </script>
 ```
-where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger) . e.g. `https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js`
+where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger) . e.g. [https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js](https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js)
+
 
 |method|description|example|
 |-|-|-|
