@@ -16,11 +16,11 @@ Make your logs look like this:
 
 ## How to use:
 
- - **Bunder**:
+### Bunder:
  
  Install the logger `npm install lines-logger`.
 
-   - **typescript**:
+#### Typescript**
 ```typescript
 import {Logger, LoggerFactory} from 'lines-logger';
 
@@ -28,14 +28,14 @@ let factory: LoggerFactory = new LoggerFactory();
 let logger: Logger = factory.getLoggerColor('tag', 'blue');
 ```
 
-   - **es3**:
+#### es3:
 ```javascript
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
 var logger = loggerFactory.getLoggerColor('tag', 'blue');
 ```
  
-   - **CDN**:
+### CDN:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/lines-logger@{{VERSION}}/lib/browser.js"></script>
 <script>
@@ -45,7 +45,7 @@ var LoggerFactory = linesLogger.LoggerFactory()
 
 where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger) . e.g. [https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js](https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js)
 
-**Now log anywhere in your code**:
+## Now log anywhere in your code:
 ```javascript
 logger.log('Hello world')(); // pay attention to () in the end. `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
 logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
