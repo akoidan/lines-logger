@@ -16,9 +16,11 @@ Make your logs look like this:
 
 ## How to use:
 
-Install the logger `npm install lines-logger`.
+ - **Bunder**:
+ 
+ Install the logger `npm install lines-logger`.
 
- **typescript**:
+   - **typescript**:
 ```typescript
 import {Logger, LoggerFactory} from 'lines-logger';
 
@@ -26,21 +28,20 @@ let factory: LoggerFactory = new LoggerFactory();
 let logger: Logger = factory.getLoggerColor('tag', 'blue');
 ```
 
-**es3**:
+   - **es3**:
 ```javascript
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
 var logger = loggerFactory.getLoggerColor('tag', 'blue');
 ```
-
-**CDN**:
+ 
+   - **CDN**:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/lines-logger@{{VERSION}}/lib/browser.js"></script>
 <script>
 var LoggerFactory = linesLogger.LoggerFactory()
 </script>
 ```
-
 
 where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger) . e.g. [https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js](https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js)
 
