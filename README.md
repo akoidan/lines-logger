@@ -14,7 +14,7 @@ Make your logs look like this:
 
 ![logs example](https://raw.githubusercontent.com/Deathangel908/lines-logger/master/demo.jpeg)
 
-## How to use:
+# How to use:
 
 ### Bunder:
  
@@ -74,7 +74,7 @@ logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 | `Logger.log('{}', p1)`| logger allow to print params to the middle of the line | `logger.log('Hello {}!', 'world')()`|
 
 
-## Some tricks:
+# Some tricks:
 - Don't forget to turn logs during production, you can either pass `8` to constructor: `new LoggerFactory(8);`.  Or use `setLogWarnings(8)`.
 - If there's a case that you need to check logs while production, you can easily do so by exposing loggerFactory to a global variable. 
 ``` js
