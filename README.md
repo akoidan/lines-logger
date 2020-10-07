@@ -14,13 +14,30 @@ Make your logs look like this:
 
 ![logs example](https://raw.githubusercontent.com/Deathangel908/lines-logger/master/demo.jpeg)
 
-# How to use:
+# 1. Installation:
 
-### Bunder:
+### With npm:
  
- Install the logger `npm install lines-logger`.
+ Install the logger `npm install lines-logger --save`.
+ 
+### By including a link:
+```html
+<script src="https://cdn.jsdelivr.net/npm/lines-logger@{{VERSION}}/lib/browser.js"></script>
+```
+where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger). e.g. [https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js](https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js)
 
-#### Typescript**
+# 2. Configuration
+
+## 2.1 Create logger
+
+### If you use javascript:
+```javascript
+var LoggerFactory = require('lines-logger').LoggerFactory; // import {LoggerFactory} from 'lines-logger';
+var loggerFactory = new LoggerFactory();
+var logger = loggerFactory.getLoggerColor('tag', 'blue');
+```
+
+### If you use Typescript:
 ```typescript
 import {Logger, LoggerFactory} from 'lines-logger';
 
@@ -28,29 +45,13 @@ let factory: LoggerFactory = new LoggerFactory();
 let logger: Logger = factory.getLoggerColor('tag', 'blue');
 ```
 
-#### es3:
-```javascript
-var LoggerFactory = require('lines-logger').LoggerFactory;
-var loggerFactory = new LoggerFactory();
-var logger = loggerFactory.getLoggerColor('tag', 'blue');
-```
- 
-### CDN:
-```html
-<script src="https://cdn.jsdelivr.net/npm/lines-logger@{{VERSION}}/lib/browser.js"></script>
-<script>
-var LoggerFactory = linesLogger.LoggerFactory()
-</script>
-```
-
-where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger) . e.g. [https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js](https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js)
-
-## Now log anywhere in your code:
+## 2.2 Log anywhere in your code:
 ```javascript
 logger.log('Hello world')(); // pay attention to () in the end. `logger.log` returns a function that should be called, thus `console.log` is called from YOUR location instead of the library.
 logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 ```
 
+# 3. Documentation
 
 |method|description|example|
 |-|-|-|
@@ -74,16 +75,16 @@ logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 | `Logger.log('{}', p1)`| logger allow to print params to the middle of the line | `logger.log('Hello {}!', 'world')()`|
 
 
-# Some tricks:
-- Don't forget to turn logs during production, you can either pass `8` to constructor: `new LoggerFactory(8);`.  Or use `setLogWarnings(8)`.
-- If there's a case that you need to check logs while production, you can easily do so by exposing loggerFactory to a global variable. 
+# 4. Best practice:
+- You can turn off logs for production builds, while creating logger factory `new LoggerFactory(8);` or using method `setLogWarnings(8)`. E.g. for webpack you can use [DefinePlugin](https://stackoverflow.com/a/29851256/3872976), the example is [here](https://github.com/akoidan/vue-webpack-typescript/blob/7ff6596c502bf7185378471088c3545d903c8e38/src/utils/singletons.ts#L7)
+- You would probably like to expose loggerFactory to global scope (window). Thus in case of troubleshooting you can go to production site and turn on logs during runtime.
 ``` js
 var LoggerFactory = require('lines-logger').LoggerFactory;
 var loggerFactory = new LoggerFactory();
 window.loggerFactory = loggerFactory
 ```
 Now if you need to debug your production site you can just open devtools and type `loggerFactory.setLogWarnings(2)`
-- If you want to intercept logs with something like [SinonSpy](http://sinonjs.org/releases/v4.0.0/spies/), you can pass it as a 2nd param to a loggerFactory constructor
+- If you want to intercept/mock logs for testing or any other purpose, you can pass object callbacks as a 2nd param to a loggerFactory constructor
 ``` js
 import { spy } from 'sinon'
 var loggerSpy = spy()
