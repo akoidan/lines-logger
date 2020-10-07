@@ -103,3 +103,14 @@ new LoggerFactory(0, {
   }
 })
 ```
+
+# 5. Building yourself:
+ - `yarn install` - installs devDependencies. I use `yarn.lock` but npm work as well.
+ - `yarn build` - compiles code to `./lib` directory. This build has:
+   -  Type definitions in `index.d.ts`
+   -  Umd version for import via script tag `browser.js`
+   -  CommonJS version for if you use bundler like webpack `index.js`.
+ - `yarn test` - runs mocha tests from `./test/index.ts.
+ - `yarn lint:check` - lints the src directory. Ignore the `test` dir. 
+ - `yarn lint:fix` - automatically fixes wrong formatting in `src`.
+ - `yarn publish` - updates npm version

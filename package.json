@@ -1,18 +1,16 @@
 {
   "name": "lines-logger",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "lib/index.js",
   "description": "A simple browser logger that keeps origin source files location",
   "scripts": {
-    "build": "",
+    "build": "rm -rf ./lib && tsc -p src/tsconfig.json && rollup  -c ./rollup.config.js && uglifyjs lib/index.js -o lib/index.js --compress",
     "test": "mocha",
     "report": "nyc mocha",
     "lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "codecov": "codecov",
-    "check": "gts check",
-    "clean": "gts clean",
-    "compile": "rm ./lib -rf && tsc -p src/tsconfig.json && rollup  -c ./rollup.config.js && uglifyjs lib/index.js -o lib/index.js --compress",
-    "fix": "gts fix",
+    "lint:check": "gts check",
+    "lint:fix": "gts fix",
     "posttest": "npm run check"
   },
   "repository": {
