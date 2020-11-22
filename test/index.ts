@@ -206,7 +206,7 @@ describe('logger', () => {
     fnLogger('{} 2', 1)();
     expect(cb).to.have.been.calledOnceWithExactly(
         `%ctest`,
-        'color: white; background-color: #647c53; padding: 2px 6px; border-radius: 2px; font-size: 10px',
+        'color: white; background-color: #514b6b; padding: 2px 6px; border-radius: 2px; font-size: 10px',
         '',
         1,
         ' 2'
@@ -224,15 +224,15 @@ describe('logger', () => {
   });
   it(`should generate dark colors despite the hash of the tag`, () => {
     const loggerFactory: LoggerFactory = new LoggerFactory();
-    expect(loggerFactory.getRandomColor()).to.be.equal('#2e3899');
-    expect(loggerFactory.getRandomColor('')).to.be.equal('#2e3899');
-    expect(loggerFactory.getRandomColor('1')).to.be.equal('#0220b4');
-    expect(loggerFactory.getRandomColor('a')).to.be.equal('#004494');
-    expect(loggerFactory.getRandomColor('A')).to.be.equal('#570044');
-    expect(loggerFactory.getRandomColor('Z')).to.be.equal('#148983');
-    expect(loggerFactory.getRandomColor('z')).to.be.equal('#061343');
-    expect(loggerFactory.getRandomColor('ws')).to.be.equal('#69305c');
-    expect(loggerFactory.getRandomColor('ff')).to.be.equal('#462c6f');
+    expect(loggerFactory.getRandomColor()).to.be.equal('#0b2342');
+    expect(loggerFactory.getRandomColor('')).to.be.equal('#0b2342');
+    expect(loggerFactory.getRandomColor('1')).to.be.equal('#505471');
+    expect(loggerFactory.getRandomColor('a')).to.be.equal('#097a2d');
+    expect(loggerFactory.getRandomColor('A')).to.be.equal('#850a30');
+    expect(loggerFactory.getRandomColor('Z')).to.be.equal('#7b5813');
+    expect(loggerFactory.getRandomColor('z')).to.be.equal('#0e2e14');
+    expect(loggerFactory.getRandomColor('ws')).to.be.equal('#41093a');
+    expect(loggerFactory.getRandomColor('ff')).to.be.equal('#18756d');
   });
   it(`should generate different hashes in input`, () => {
     expect(LoggerFactory.getHash('')).to.be.equal(3338908027751811);
@@ -249,7 +249,7 @@ describe('logger', () => {
     expect(spyLog).to.have.been.calledOnce;
     expect(spyLog).to.have.been.calledOnceWithExactly(
         `%ctest`,
-        'color: white; background-color: #647c53; padding: 2px 6px; border-radius: 2px; font-size: 10px',
+        'color: white; background-color: #514b6b; padding: 2px 6px; border-radius: 2px; font-size: 10px',
         'print message'
     );
   });
