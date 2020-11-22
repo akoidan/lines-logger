@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+    function getHash(str, seed= 0) {
+        let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+        for (let i = 0, ch; i < str.length; i++) {
+            ch = str.charCodeAt(i);
+            h1 = Math.imul(h1 ^ ch, 2654435761);
+            h2 = Math.imul(h2 ^ ch, 1597334677);
+        }
+        h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+        h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+        return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+    }
+
+    function numberToString() {
+        return ('00' + c.toString(16)).substr(-2)
+    }
+
+    function getRandomColor(str= '') {
+        let hash = getHash(str);
+        let result = '#';
+        for (let i = 0; i < 3; i ++) {
+            // get 7 bits in range, and cast them to hex, so we have 0..127 of rgb in hex for each color
+            result += ('00' + (((hash >> (i * 7)) & 0b1111111) + 8).toString(16)).substr(-2);
+        }
+        return result;
+    }
+
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
+    function generate() {
+        let a= makeid(Math.floor(Math.random()*5+1));
+        let randomColor = getRandomColor(a);
+        value.innerHTML = randomColor + ':'+ a + '<br>' + value.innerHTML;
+        console.log()
+        document.body.style.backgroundColor = randomColor;
+        document.body.style.color = 'white';
+
+    }
+</script>
+<input type="button" onclick="generate()" value="generate"/>
+<div id="value"></div>
+</body>
+</html>

@@ -208,23 +208,16 @@ export class LoggerFactory {
     return 4294967296 * (2097151 & h2) + (h1 >>> 0);
   }
 
+  /**
+   * Generates a random color based on the hash of the string
+   **/
   getRandomColor(str: string = '') {
     const hash = LoggerFactory.getHash(str);
     let color = '#';
-    let rgb = [];
-    let sum = 0;
-    for (let i = 0; i < 3; i++) {
-      const value = (hash >> (i * 8)) & 0xFF;
-      rgb.push(value);
-      sum += value;
+    for (let i = 0; i < 3; i ++) {
+      // get 7 bits in range, and cast them to hex, so we have 0..127 of rgb in hex for each color
+      color += ('00' + (((hash >> (i * 7)) & 0b1111111) + 8).toString(16)).substr(-2);
     }
-    if (sum > 200) {
-      const reduc6 = Math.floor(sum / 6);
-      rgb = rgb.map(r => r > reduc6 ? r - reduc6 : 0);
-    }
-    rgb.forEach(c => {
-      color += ('00' + c.toString(16)).substr(-2);
-    });
     return color;
   }
 
