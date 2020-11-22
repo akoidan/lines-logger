@@ -55,6 +55,20 @@ export interface MockConsole {
 }
 
 /**
+ * Map of level of the log and its priority
+ */
+export const logLevels: Record<LogLevel, number> = {
+  log_raise_error: 1,
+  log_with_warnings: 2,
+  trace: 3,
+  debug: 4,
+  info: 5,
+  warn: 6,
+  error: 7,
+  disable: 8,
+};
+
+/**
  * Factory class for {@see Logger}
  */
 export class LoggerFactory {
@@ -68,16 +82,6 @@ export class LoggerFactory {
    */
   private mockConsole: MockConsole;
 
-  private readonly levels: Record<LogLevel, number> = {
-    log_raise_error: 1,
-    log_with_warnings: 2,
-    trace: 3,
-    debug: 4,
-    info: 5,
-    warn: 6,
-    error: 7,
-    disable: 8,
-  };
   /**
    * @param logLevel - initial logging level
    * @param mockConsole - console object that will be triggered, default to
@@ -87,9 +91,9 @@ export class LoggerFactory {
       logLevel: LogLevel = 'log_with_warnings',
       mockConsole: MockConsole|null = null) {
     this.logLevel = logLevel;
-    if (!this.levels[logLevel]) {
+    if (!logLevels[logLevel]) {
       throw Error(`Invalid log level ${logLevel} allowed: ${
-          JSON.stringify(this.levels)}`);
+          JSON.stringify(logLevels)}`);
     }
     if (mockConsole) {
       this.mockConsole = mockConsole;
@@ -145,7 +149,7 @@ export class LoggerFactory {
       name: string, style: string, fn: Function,
       minLevel: LogLevel = 'log_with_warnings'): DoLog {
     return (...args1: unknown[]) => {
-      if (this.levels[this.logLevel] > this.levels[minLevel]) {
+      if (logLevels[this.logLevel] > logLevels[minLevel]) {
         return this.dummy;
       }
       const args = Array.prototype.slice.call(args1);
