@@ -92,6 +92,7 @@ logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 
 # Best practices:
 - Check [vue-webpack-typescript](https://github.com/akoidan/vue-webpack-typescript) repository for an example of project structure with lines logger.
+- Use positional arguments like `logger.log('Hello {}', { text: 'world'} )` when you want a browser to paste an object instead of string. Remember chrome and some other browsers don't freeze this object, meaning it's live. So when you later change its value it automatically changes in the log (if it's not rendered yet). So if you need to paste just a simple text use es6 templates: `logger.log(``Hello world``)` .
 - If you need time for your logs, modern browser provide that out of the box. E.g. in chrome you can go to preferences -> console -> Show timestamps.
 - You can turn off logs for production builds, while creating logger factory `new LoggerFactory('disable');` or using method `setLogWarnings('disable')`. E.g. for webpack you can use [DefinePlugin](https://stackoverflow.com/a/29851256/3872976), the example is [here](https://github.com/akoidan/vue-webpack-typescript/blob/7ff6596c502bf7185378471088c3545d903c8e38/src/utils/singletons.ts#L7)
 - You would probably like to expose loggerFactory to global scope (window). Thus in case of troubleshooting you can go to production site and turn on logs during runtime.
