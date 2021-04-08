@@ -124,6 +124,7 @@ new LoggerFactory('trace', {
   }
 })
 ```
+- Timestamps . I inspire to use integrated timestamps feature in the browser instead of custom parameter in the logger. See [this feature](https://github.com/akoidan/lines-logger/issues/5#issuecomment-815566299)
 
 # Contributions
 
