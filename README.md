@@ -21,14 +21,13 @@ Make your logs look like this:
  
 ### By including a link:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/lines-logger@{{VERSION}}/lib/browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lines-logger@2.1.2/lib/browser.js"></script>
 <script>
 var LoggerFactory  = linesLogger.LoggerFactory;
 var loggerFactory = new LoggerFactory();
 var logger = loggerFactory.getLogger('tag');
 </script>
 ```
-where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger). e.g. [https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js](https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js)
 
 # Configuration
 
