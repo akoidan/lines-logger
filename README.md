@@ -125,6 +125,16 @@ new LoggerFactory('trace', {
 })
 ```
 - Timestamps . I inspire to use integrated timestamps feature in the browser instead of custom parameter in the logger. See [this feature](https://github.com/akoidan/lines-logger/issues/5#issuecomment-815566299)
+- Ensuring you don't forget to execute logger twice. You can use this eslint rule. And make a rule to name your logger object as `logger`.
+**.eslintrc.json**
+```json
+{
+  "rules": {
+    "selector": "CallExpression[callee.object.name='logger']:not([parent.type='CallExpression'])",
+    "message": "You must call logger.[log,warning,debug,trace,error](\"message\")() as a function 2 times"
+  }
+}
+```
 
 # Contributions
 
