@@ -30,6 +30,9 @@ export interface DoLog {
  *    print: info, warn, error
  *    hide: trace, debug
  *
+ * log:
+ *    deprecated. Use info instead
+ *
  * warn:
  *    print: warn, error
  *    hide: trace, debug, info
