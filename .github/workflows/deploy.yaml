@@ -1,0 +1,32 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        registry-url: 'https://registry.npmjs.org'
+        cache: 'yarn'
+
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+
+    - name: Build the package
+      run: yarn build  # Adjust if you have a different build script
+
+    - name: Publish package
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  # Assumes NPM_TOKEN is set in your repo secrets

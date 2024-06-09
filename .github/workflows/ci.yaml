@@ -1,0 +1,32 @@
+name: Test & Lint
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run test
+        run: yarn test
+
+      - name: Run report
+        run: yarn report
+
+      - name: Run lcov
+        run: yarn lcov
+
+      - name: Run codecov
+        run: yarn codecov

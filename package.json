@@ -10,8 +10,7 @@
     "lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "codecov": "codecov",
     "lint:check": "gts check",
-    "lint:fix": "gts fix",
-    "posttest": "npm run lint:check"
+    "lint:fix": "gts fix"
   },
   "repository": {
     "type": "git",
