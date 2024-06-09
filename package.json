@@ -1,6 +1,6 @@
 {
   "name": "lines-logger",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "main": "lib/index.js",
   "description": "A simple browser logger that keeps origin source files location",
   "scripts": {

@@ -1,4 +1,5 @@
-# lines-logger  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/deathangel908/lines-logger/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger) [![Build Status](https://travis-ci.org/akoidan/lines-logger.svg?branch=master)](https://travis-ci.org/akoidan/lines-logger) [![HitCount](http://hits.dwyl.io/akoidan/lines-logger.svg)](http://hits.dwyl.io/akoidan/lines-logger) [![codecov](https://codecov.io/gh/akoidan/lines-logger/branch/master/graph/badge.svg)](https://codecov.io/gh/akoidan/lines-logger) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/akoidan/lines-logger/issues) [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
+# <img width="350px" src="/lines-logger.png"/> 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/deathangel908/lines-logger/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger) [![Build Status](https://travis-ci.org/akoidan/lines-logger.svg?branch=master)](https://travis-ci.org/akoidan/lines-logger) [![codecov](https://codecov.io/gh/akoidan/lines-logger/branch/master/graph/badge.svg)](https://codecov.io/gh/akoidan/lines-logger) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/akoidan/lines-logger/issues) [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 [![NPM](https://nodei.co/npm/lines-logger.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/lines-logger/)
 
@@ -20,9 +21,13 @@ Make your logs look like this:
  
 ### By including a link:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/lines-logger@{{VERSION}}/lib/browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lines-logger@2.1.2/lib/browser.js"></script>
+<script>
+var LoggerFactory  = linesLogger.LoggerFactory;
+var loggerFactory = new LoggerFactory();
+var logger = loggerFactory.getLogger('tag');
+</script>
 ```
-where `{{VERSION}}` is [![npm version](https://img.shields.io/npm/v/lines-logger.svg)](https://www.npmjs.com/package/lines-logger). e.g. [https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js](https://cdn.jsdelivr.net/npm/lines-logger@1.2.0/lib/browser.js)
 
 # Configuration
 
@@ -87,6 +92,7 @@ logger.debug('My array is {}, object is {}', [1,2,3], {1:1, 2:2})();
 
 # Best practices:
 - Check [vue-webpack-typescript](https://github.com/akoidan/vue-webpack-typescript) repository for an example of project structure with lines logger.
+- Use positional arguments like `logger.log('Hello {}', { text: 'world'} )` when you want a browser to paste an object instead of string. Remember chrome and some other browsers don't freeze this object, meaning it's live. So when you later change its value it automatically changes in the log (if it's not rendered yet). So if you need to paste just a simple text use es6 templates: `logger.log(``Hello world``)` .
 - If you need time for your logs, modern browser provide that out of the box. E.g. in chrome you can go to preferences -> console -> Show timestamps.
 - You can turn off logs for production builds, while creating logger factory `new LoggerFactory('disable');` or using method `setLogWarnings('disable')`. E.g. for webpack you can use [DefinePlugin](https://stackoverflow.com/a/29851256/3872976), the example is [here](https://github.com/akoidan/vue-webpack-typescript/blob/7ff6596c502bf7185378471088c3545d903c8e38/src/utils/singletons.ts#L7)
 - You would probably like to expose loggerFactory to global scope (window). Thus in case of troubleshooting you can go to production site and turn on logs during runtime.
@@ -117,6 +123,17 @@ new LoggerFactory('trace', {
     loggerSpy(arguments)
   }
 })
+```
+- Timestamps . I inspire to use integrated timestamps feature in the browser instead of custom parameter in the logger. See [this feature](https://github.com/akoidan/lines-logger/issues/5#issuecomment-815566299)
+- Ensuring you don't forget to execute logger twice. You can use this eslint rule. And make a rule to name your logger object as `logger`.
+**.eslintrc.json**
+```json
+{
+  "rules": {
+    "selector": "CallExpression[callee.object.name='logger']:not([parent.type='CallExpression'])",
+    "message": "You must call logger.[log,warning,debug,trace,error](\"message\")() as a function 2 times"
+  }
+}
 ```
 
 # Contributions
