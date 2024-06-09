@@ -1,6 +1,7 @@
 export interface Logger {
   warn: DoLog;
   log: DoLog;
+  info: DoLog;
   error: DoLog;
   debug: DoLog;
   trace: DoLog;
@@ -50,6 +51,7 @@ export interface MockConsole {
   trace(message?: unknown, ...optionalParams: unknown[]): void;
   debug(message?: unknown, ...optionalParams: unknown[]): void;
   log(message?: unknown, ...optionalParams: unknown[]): void;
+  info(message?: unknown, ...optionalParams: unknown[]): void;
   warn(message?: unknown, ...optionalParams: unknown[]): void;
   error(message?: unknown, ...optionalParams: unknown[]): void;
 }
@@ -239,6 +241,7 @@ export class LoggerFactory {
       trace: this.getSingleLoggerStyle(name, style, this.mockConsole.trace, 'trace'),
       debug: this.getSingleLoggerStyle(name, style, this.mockConsole.debug, 'debug'),
       log: this.getSingleLoggerStyle(name, style, this.mockConsole.log, 'info'),
+      info: this.getSingleLoggerStyle(name, style, this.mockConsole.info, 'info'),
       warn: this.getSingleLoggerStyle(name, style, this.mockConsole.warn, 'warn'),
       error: this.getSingleLoggerStyle(name, style, this.mockConsole.error, 'error'),
     };

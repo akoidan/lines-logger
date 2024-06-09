@@ -35,6 +35,9 @@ describe('logger', () => {
       log(message?: unknown, ...optionalParams: unknown[]): void {
         console.log(`calling log message: ${message} params: ${optionalParams.join(',')}`);
       }
+      info(message?: unknown, ...optionalParams: unknown[]): void {
+        console.log(`calling info message: ${message} params: ${optionalParams.join(',')}`);
+      }
       warn(message?: unknown, ...optionalParams: unknown[]): void {
         console.log(`calling warn message: ${message} params: ${optionalParams.join(',')}`);
       }
